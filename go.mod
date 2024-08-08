@@ -1,4 +1,4 @@
-module learning_go
+module github.com/heykyros/MangaCLI
 
 go 1.22.6
 
