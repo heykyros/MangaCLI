@@ -103,8 +103,6 @@ func Start(chapterNum string, mangaName string) {
 
 	//io
 
-	fmt.Print("Enter the chapter number: ")
-	fmt.Scanln(&chapterNum)
 	DownloadChapter(chapterNum, FindChapterUrl(mangaName, mangaUrls[mangaName], chapterNum))
 	//loading bar
 	fmt.Println("Done! Downloaded chapter " + chapterNum)
