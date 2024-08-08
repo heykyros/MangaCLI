@@ -1,4 +1,4 @@
-package main
+package Scraper
 
 import (
 	"fmt"
@@ -14,7 +14,7 @@ type Chapter struct {
 	cdnUrls    []string
 }
 
-func scrapeChapter(chapterUrl string) []string {
+func ScrapeChapter(chapterUrl string) []string {
 	cdns := []string{}
 
 	imageScraper := colly.NewCollector()
@@ -44,7 +44,7 @@ func scrapeChapter(chapterUrl string) []string {
 	return cdns
 }
 
-func downloadImage(url string, chapterNum string, pageNum string) {
+func DownloadImage(url string, chapterNum string, pageNum string) {
 	os.Chdir("../manga")
 	img, _ := os.Create(chapterNum + "_" + pageNum + ".jpg")
 	defer img.Close()
@@ -59,7 +59,7 @@ func downloadImage(url string, chapterNum string, pageNum string) {
 	io.Copy(img, test.Body)
 }
 
-func findChapterUrl(mangaName string, mangaUrl string, chapter string) string {
+func FindChapterUrl(mangaName string, mangaUrl string, chapter string) string {
 	var chapterUrl string
 	sc := colly.NewCollector()
 
@@ -88,11 +88,11 @@ func findChapterUrl(mangaName string, mangaUrl string, chapter string) string {
 	return ("https://properlinker.com" + chapterUrl)
 }
 
-func downloadChapter(chapterNum string, chapterUrl string) {
+func DownloadChapter(chapterNum string, chapterUrl string) {
 	chapter := Chapter{chapterNum: chapterNum}
-	chapter.cdnUrls = scrapeChapter(chapterUrl)
+	chapter.cdnUrls = ScrapeChapter(chapterUrl)
 	for i, v := range chapter.cdnUrls {
-		downloadImage(v, chapter.chapterNum, strconv.Itoa(i))
+		DownloadImage(v, chapter.chapterNum, strconv.Itoa(i))
 	}
 }
 
@@ -105,7 +105,7 @@ func Start(chapterNum string, mangaName string) {
 
 	fmt.Print("Enter the chapter number: ")
 	fmt.Scanln(&chapterNum)
-	downloadChapter(chapterNum, findChapterUrl(mangaName, mangaUrls[mangaName], chapterNum))
+	DownloadChapter(chapterNum, FindChapterUrl(mangaName, mangaUrls[mangaName], chapterNum))
 	//loading bar
 	fmt.Println("Done! Downloaded chapter " + chapterNum)
 }
