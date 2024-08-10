@@ -1,6 +1,6 @@
 # MangaCLI
 
-#### Manga webscraping right to your *windows* computer
+#### Manga webscraping right to your computer
 
 ### Currently includes:
 
